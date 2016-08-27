@@ -100,100 +100,6 @@ def eliminate(values, s, d):
             return False
 
    # (2) If a unit u is reduced to only one place for a value d, then put it there.
-   #  for u in units[s]:
-   #      seensofar =0
-   #      seensofarlessrepeats =0
-   #      repeatedtwiceormore =0
-   #      repeatedexactlyoncethistime =0
-   #      numsexactlyonce =0
-   #      bininitnum =0
-   #      binrepeattwice =0
-   #      firsttimedigseen =0
-   #      num2dict = defaultdict(list)
-   #      for s in range(len(u)):
-   #          seensofarlessrepeats  = seensofar^values[u[s]]
-   #          seensofar |= values[u[s]]
-   #          repeatedtwiceormore = seensofar - seensofarlessrepeats
-   #          repeatedexactlyoncethistime |=repeatedtwiceormore
-   #          numsexactlyonce = seensofar-repeatedexactlyoncethistime
-   #
-   #          bininitnum = int(bin(values[u[s]])[2:])
-   #          binrepeattwice = int(bin(repeatedtwiceormore)[2:])
-   #
-   #          firsttimedigseen += s*(bininitnum - binrepeattwice)
-   #          num2dict[values[u[s]]].append(u[s])
-   #      if seensofar != 511: return False
-   #
-   #
-   #
-   #
-   #
-   #
-   #      unitlist = [values[s] for s in u]
-   #      if onestable[reduce(ior, unitlist)] < 9:
-   #          return False
-   #      # get dth bit in unitlist
-   #      for tupower in twopowers(d):
-   #          dplaces = [s for s in u if tupower & values[s] != 0]
-   #          if len(dplaces) == 1:
-   #              # d can only be in one place in unit; assign it there
-   #              if not assign(values, dplaces[0], tupower):
-   #                  return False
-   #  return values
-
-    # iter4
-    # # (2) If a unit u is reduced to only one place for a value d, then put it there.
-    # for u in units[s]:
-    #     unitlist = [values[s] for s in u]
-    #     if onestable[reduce(ior, unitlist)] < 9:
-    #         return False
-    #     # get dth bit in unitlist
-    #     for tupower in twopowers(d):
-    #         dplaces = [s for s in u if tupower & values[s] != 0]
-    #         if len(dplaces) == 1:
-    #             # d can only be in one place in unit; assign it there
-    #             if not assign(values, dplaces[0], tupower):
-    #                 return False
-    # return values
-
-    #     sumdthbit = 0
-    #     last1bit = -1
-    #     for index,unit in enumerate(unitlist):
-    #         kbn = kthbitofn(unit,d)
-    #         sumdthbit += kbn
-    #         if sumdthbit >1: break
-    #         if kbn ==1: last1bit = index
-    #     if sumdthbit == 1:
-    #         if not assign(values, u[last1bit], d):
-    #             print("returning false on assignment. u[last1bit]",u[last1bit],"values[u[last1bit]] = ",values[u[last1bit]],"d = ",d)
-    #             return False
-    # return values
-
-
-    # iter 2 (slower thn iter 1
-    # for u in units[s]:
-    #     dplaces = [(tupower,[s for s in u if tupower & values[s] != 0]) for tupower in twopowers(d)]
-    #     if any(len(place[1]) == 0 for place in dplaces):
-    #         return False ## Contradiction: no place for this value
-    #     if not all(assign(values, place[1][0], place[0]) for place in dplaces if len(place[1]) ==1):
-    #         # d can only be in one place in unit; assign it there
-    #             return False
-    # return values
-
-    # # iter 3
-    # for u in units[s]:
-    #     dplaces = [s for s in u if d & values[s] != 0]
-    #     if len(dplaces) == 0: return False  ## Contradiction: no place for this value
-    #     for tupower in twopowers(d):
-    #         dplaces = [s for s in u if tupower & values[s] != 0]
-    #         # dplaces = [[(s,tupower) for s in u if tupower & values[s] != 0] for tupower in twopowers(d)]
-    #         if len(dplaces) == 1:
-    #             # d can only be in one place in unit; assign it there
-    #             if not is_power2(values[dplaces[0]]):
-    #                 if not assign(values, dplaces[0], tupower):
-    #                     return False
-    # return values
-
     # iter 2
     for tupower in twopowerslist[d]:
         for u in units[s]:
@@ -207,19 +113,6 @@ def eliminate(values, s, d):
                     if not assign(values, dplaces[0], tupower):
                         return False
     return values
-
-    # # iter 1
-    # for tupower in twopowers(d):
-    #     for u in units[s]:
-    #         dplaces = [s for s in u if tupower & values[s] != 0]
-    #         # dplaces = [[(s,tupower) for s in u if tupower & values[s] != 0] for tupower in twopowers(d)]
-    #         if len(dplaces) == 0:
-    #             return False  ## Contradiction: no place for this value
-    #         elif len(dplaces) == 1:
-    #             # d can only be in one place in unit; assign it there
-    #             if not assign(values, dplaces[0], tupower):
-    #                 return False
-    # return values
 
 
 def solve(grid):
