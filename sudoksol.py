@@ -2,9 +2,6 @@ import time
 import sys
 
 numobjects = 0
-from operator import ior
-from functools import reduce
-from collections import defaultdict
 
 def kthbitofn(n, k):
     return (n & (1 << k)) >> k
@@ -157,7 +154,7 @@ def display(values):
     width = 1 + max(len(values[s]) for s in squares)
     line = '+'.join(['-' * (width * 3)] * 3)
     for r in rows:
-        print([''.join(values[r + c].center(width) + ('|' if c in '36' else '')) for c in cols])
+        print(''.join([values[r + c].center(width) + ('|' if c in '36' else '') for c in cols]))
         if r in 'CF': print(line)
     print()
 
